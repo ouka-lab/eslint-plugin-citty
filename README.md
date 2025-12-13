@@ -28,7 +28,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/must-have-run-or-sub-commands": "error",
         "citty/recommend-meta": "warn",
         "citty/no-empty-command-properties": "warn",
-        "citty/no-default-on-positional": "warn"
+        "citty/no-default-on-positional": "warn",
+        "citty/alias-should-be-short": "warn"
     }
 }
 ```
@@ -377,9 +378,9 @@ import { defineCommand } from "citty";
 export const main = defineCommand({
   meta: {
     name: "main",
-    run() {
-      console.log("Hello");
-    },
+  },
+  run() {
+    console.log("Hello");
   },
 });
 ```
@@ -478,6 +479,38 @@ export const main = defineCommand({
     verbose: {
       type: "boolean",
       default: false,
+    },
+  },
+});
+```
+
+### alias-should-be-short
+
+Warn when an alias is not shorter than the argument name itself.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    force: {
+      alias: "force", // Same length as argument name
+    },
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    force: {
+      alias: "f",
     },
   },
 });
