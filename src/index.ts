@@ -4,6 +4,7 @@ import { noMeaninglessValueHint } from './rules/no-meaningless-value-hint';
 import { valueHintCase } from './rules/value-hint-case';
 import { noHiddenRootCommand } from './rules/no-hidden-root-command';
 import { noAliasOnPositional } from './rules/no-alias-on-positional';
+import { enumMustHaveOptions } from './rules/enum-must-have-options';
 
 export const rules = {
   'no-duplicated-version': noDuplicatedVersion,
@@ -12,6 +13,7 @@ export const rules = {
   'value-hint-case': valueHintCase,
   'no-hidden-root-command': noHiddenRootCommand,
   'no-alias-on-positional': noAliasOnPositional,
+  'enum-must-have-options': enumMustHaveOptions,
 };
 
 export default {

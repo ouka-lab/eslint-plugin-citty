@@ -23,7 +23,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/no-meaningless-value-hint": "warn",
         "citty/value-hint-case": "error",
         "citty/no-hidden-root-command": "warn",
-        "citty/no-alias-on-positional": "error"
+        "citty/no-alias-on-positional": "error",
+        "citty/enum-must-have-options": "error"
     }
 }
 ```
@@ -308,6 +309,40 @@ export const main = defineCommand({
     verbose: {
       type: "boolean",
       alias: "v",
+    },
+  },
+});
+```
+
+### enum-must-have-options
+
+Enforce `options` property when argument type is `enum`.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    choice: {
+      type: "enum",
+      // options missing
+    },
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    choice: {
+      type: "enum",
+      options: ["a", "b"],
     },
   },
 });

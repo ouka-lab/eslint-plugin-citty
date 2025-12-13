@@ -1,0 +1,87 @@
+import { createRule } from '../utils';
+import { AST_NODE_TYPES } from '@typescript-eslint/utils';
+
+export const enumMustHaveOptions = createRule({
+  name: 'enum-must-have-options',
+  meta: {
+    type: 'problem',
+    docs: {
+      description: 'Enforce options property when type is enum',
+    },
+    messages: {
+      missingOptions: 'Property "options" is required when type is "enum".',
+    },
+    schema: [],
+  },
+  defaultOptions: [],
+  create(context) {
+    return {
+      CallExpression(node) {
+        if (
+          node.callee.type === AST_NODE_TYPES.Identifier &&
+          node.callee.name === 'defineCommand' &&
+          node.arguments.length > 0
+        ) {
+          const arg = node.arguments[0];
+          if (arg.type === AST_NODE_TYPES.ObjectExpression) {
+            const argsProperty = arg.properties.find(
+              (property) =>
+                property.type === AST_NODE_TYPES.Property &&
+                property.key.type === AST_NODE_TYPES.Identifier &&
+                property.key.name === 'args'
+            );
+
+            if (
+              argsProperty &&
+              argsProperty.type === AST_NODE_TYPES.Property &&
+              argsProperty.value.type === AST_NODE_TYPES.ObjectExpression
+            ) {
+              for (const argDef of argsProperty.value.properties) {
+                if (
+                  argDef.type === AST_NODE_TYPES.Property &&
+                  argDef.value.type === AST_NODE_TYPES.ObjectExpression
+                ) {
+                  const properties = argDef.value.properties;
+
+                  // Check for type: "enum"
+                  const typeProp = properties.find(
+                    (p) =>
+                      p.type === AST_NODE_TYPES.Property &&
+                      p.key.type === AST_NODE_TYPES.Identifier &&
+                      p.key.name === 'type'
+                  );
+
+                  let isEnum = false;
+                  if (typeProp && typeProp.type === AST_NODE_TYPES.Property) {
+                     if (typeProp.value.type === AST_NODE_TYPES.Literal && typeProp.value.value === 'enum') {
+                         isEnum = true;
+                     }
+                  }
+
+                  if (!isEnum) {
+                    continue;
+                  }
+
+                  // Check for options property
+                  const optionsProp = properties.find(
+                    (p) =>
+                      p.type === AST_NODE_TYPES.Property &&
+                      p.key.type === AST_NODE_TYPES.Identifier &&
+                      p.key.name === 'options'
+                  );
+
+                  if (!optionsProp) {
+                    context.report({
+                      node: typeProp || argDef,
+                      messageId: 'missingOptions',
+                    });
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    };
+  },
+});
