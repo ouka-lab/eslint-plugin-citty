@@ -12,10 +12,29 @@ export const recommendNameAndDescriptionInArgs = createRule({
       missingName: 'It is recommended to define "name" property for better documentation.',
       missingDescription: 'It is recommended to define "description" property for better documentation.',
     },
-    schema: [],
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          check: {
+            type: 'array',
+            items: {
+              enum: ['name', 'description'],
+            },
+            minItems: 1,
+            uniqueItems: true,
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
   },
-  defaultOptions: [],
+  defaultOptions: [{ check: ['name', 'description'] }],
   create(context) {
+    const options = context.options[0];
+    const checkName = options.check.includes('name');
+    const checkDescription = options.check.includes('description');
+
     return {
       CallExpression(node) {
         if (
@@ -55,13 +74,13 @@ export const recommendNameAndDescriptionInArgs = createRule({
                       p.key.name === 'description'
                   );
 
-                  if (!hasName) {
+                  if (checkName && !hasName) {
                     context.report({
                       node: argProperty,
                       messageId: 'missingName',
                     });
                   }
-                  if (!hasDescription) {
+                  if (checkDescription && !hasDescription) {
                     context.report({
                       node: argProperty,
                       messageId: 'missingDescription',

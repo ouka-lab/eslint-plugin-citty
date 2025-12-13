@@ -543,7 +543,94 @@ export const main = defineCommand({
 
 Recommend that an arg has `name` and `description` properties defined.
 
-**Bad**
+#### Options
+
+YouYou can customize which properties to check using the `check` option. By default, both `name` and `description` are checked.
+
+- `check`: `array` (default: `["name", "description"]`)
+  An array of strings indicating which properties to check for existence. Valid values are `"name"` and `"description"`.
+
+**Config (Check only `name`)**
+
+```json
+{
+  "rules": {
+    "citty/recommend-name-and-description-in-args": ["warn", { "check": ["name"] }]
+  }
+}
+```
+
+**Bad (Checking only `name`)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    foo: {
+      description: "Foo argument",
+      // missing name
+    },
+  },
+});
+```
+
+**Good (Checking only `name`)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    foo: {
+      name: "foo",
+      description: "Foo argument",
+    },
+  },
+});
+```
+
+**Config (Check only `description`)**
+
+```json
+{
+  "rules": {
+    "citty/recommend-name-and-description-in-args": ["warn", { "check": ["description"] }]
+  }
+}
+```
+
+**Bad (Checking only `description`)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    foo: {
+      name: "foo",
+      // missing description
+    },
+  },
+});
+```
+
+**Good (Checking only `description`)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    foo: {
+      name: "foo",
+      description: "Foo argument",
+    },
+  },
+});
+```
+
+**Bad (Default behavior - missing both)**
 
 ```ts
 import { defineCommand } from "citty";
@@ -557,7 +644,7 @@ export const main = defineCommand({
 });
 ```
 
-**Good**
+**Good (Default behavior - both present)**
 
 ```ts
 import { defineCommand } from "citty";

@@ -31,6 +31,35 @@ describe('recommend-name-and-description-in-args', () => {
             run() {},
           });
         `,
+          options: [{ check: ["name", "description"] }],
+        },
+        {
+          code: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              foo: {
+                name: "foo",
+              },
+            },
+            run() {},
+          });
+        `,
+          options: [{ check: ["name"] }],
+        },
+        {
+          code: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              foo: {
+                description: "Foo argument",
+              },
+            },
+            run() {},
+          });
+        `,
+          options: [{ check: ["description"] }],
         },
       ],
       invalid: [
@@ -44,6 +73,7 @@ describe('recommend-name-and-description-in-args', () => {
             run() {},
           });
         `,
+          options: [{ check: ["name", "description"] }],
           errors: [{ messageId: 'missingName' }, { messageId: 'missingDescription' }],
         },
         {
@@ -58,6 +88,7 @@ describe('recommend-name-and-description-in-args', () => {
             run() {},
           });
         `,
+          options: [{ check: ["name", "description"] }],
           errors: [{ messageId: 'missingDescription' }],
         },
         {
@@ -72,7 +103,34 @@ describe('recommend-name-and-description-in-args', () => {
             run() {},
           });
         `,
+          options: [{ check: ["name", "description"] }],
           errors: [{ messageId: 'missingName' }],
+        },
+        {
+          code: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              foo: {},
+            },
+            run() {},
+          });
+        `,
+          options: [{ check: ["name"] }],
+          errors: [{ messageId: 'missingName' }],
+        },
+        {
+          code: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              foo: {},
+            },
+            run() {},
+          });
+        `,
+          options: [{ check: ["description"] }],
+          errors: [{ messageId: 'missingDescription' }],
         },
       ],
     }

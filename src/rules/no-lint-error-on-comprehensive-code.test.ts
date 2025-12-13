@@ -211,7 +211,7 @@ describe('no-lint-error-on-comprehensive-code', () => {
             'citty/no-empty-command-properties': 'error',
             'citty/no-default-on-positional': 'error',
             'citty/alias-should-be-short': 'error',
-            'citty/recommend-name-and-description-in-args': 'error',
+            'citty/recommend-name-and-description-in-args': ['error', { check: ['name', 'description'] }],
             'citty/sort-sub-commands': 'error',
             'citty/sort-define-command-properties': 'error',
             'citty/group-command-args': 'error',
