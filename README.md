@@ -25,7 +25,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/no-hidden-root-command": "warn",
         "citty/no-alias-on-positional": "error",
         "citty/enum-must-have-options": "error",
-        "citty/must-have-run-or-sub-commands": "error"
+        "citty/must-have-run-or-sub-commands": "error",
+        "citty/recommend-meta": "warn"
     }
 }
 ```
@@ -374,6 +375,39 @@ import { defineCommand } from "citty";
 export const main = defineCommand({
   meta: {
     name: "main",
+  },
+  run() {
+    console.log("Hello");
+  },
+});
+```
+
+### recommend-meta
+
+Recommend that a command has `meta` property defined.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  run() {
+    console.log("Hello");
+  },
+  // missing meta
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    name: "main",
+    description: "My command",
   },
   run() {
     console.log("Hello");
