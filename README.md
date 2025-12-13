@@ -95,6 +95,44 @@ export const main = defineCommand({
 });
 ```
 
+#### Options
+
+You can customize the version format using the `pattern` option.
+
+**Config**
+
+```json
+{
+  "rules": {
+    "citty/valid-version": ["error", { "pattern": "^\\d{4}\\.\\d{2}\\.\\d{2}$" }]
+  }
+}
+```
+
+**Bad (Custom Pattern)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    version: "1.0.0", // Does not match YYYY.MM.DD
+  },
+});
+```
+
+**Good (Custom Pattern)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    version: "2023.12.01",
+  },
+});
+```
+
 ### no-meaningless-value-hint
 
 Disallow `valueHint` when it is meaningless (boolean type or enum specified).
