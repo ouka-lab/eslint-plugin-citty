@@ -1,6 +1,6 @@
 # eslint-plugin-citty
 
-ESLint plugin for [citty](https://github.com/unjs/citty).
+🌆 ESLint plugin for [citty](https://github.com/unjs/citty) and all citty lovers
 
 ## Installation
 
@@ -32,7 +32,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/alias-should-be-short": "warn",
         "citty/recommend-name-and-description-in-args": "warn",
         "citty/sort-sub-commands": "warn",
-        "citty/sort-define-command-properties": "warn"
+        "citty/sort-define-command-properties": "warn",
+        "citty/group-command-args": "warn"
     }
 }
 ```
@@ -43,6 +44,7 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
 | :----------------------------------------------------------------- | :--: | :--: | :--: |
 | [alias-should-be-short](#alias-should-be-short)                    |  ✅  |      |      |
 | [enum-must-have-options](#enum-must-have-options)                  |      |  ✅  |      |
+| [group-command-args](#group-command-args)                          |  ✅  |      |      |
 | [must-have-run-or-sub-commands](#must-have-run-or-sub-commands)    |      |  ✅  |      |
 | [no-alias-on-positional](#no-alias-on-positional)                  |      |  ✅  |  ✅  |
 | [no-default-on-positional](#no-default-on-positional)              |  ✅  |      |  ✅  |
@@ -632,5 +634,37 @@ import { defineCommand } from "citty";
 export const main = defineCommand({
   meta: {},
   run() {},
+});
+```
+
+### group-command-args
+
+Enforce a specific grouping order for command arguments: positional, then required, then optional.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    optional: {},
+    required: { required: true },
+    positional: { type: "positional" },
+  }
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    positional: { type: "positional" },
+    required: { required: true },
+    optional: {},
+  }
 });
 ```
