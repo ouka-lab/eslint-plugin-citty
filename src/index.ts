@@ -12,6 +12,7 @@ import { noDefaultOnPositional } from './rules/no-default-on-positional';
 import { aliasShouldBeShort } from './rules/alias-should-be-short';
 import { recommendNameAndDescriptionInArgs } from './rules/recommend-name-and-description-in-args';
 import { sortSubCommands } from './rules/sort-sub-commands';
+import { sortDefineCommandProperties } from './rules/sort-define-command-properties';
 
 export const rules = {
   'no-duplicated-version': noDuplicatedVersion,
@@ -28,6 +29,7 @@ export const rules = {
   'alias-should-be-short': aliasShouldBeShort,
   'recommend-name-and-description-in-args': recommendNameAndDescriptionInArgs,
   'sort-sub-commands': sortSubCommands,
+  'sort-define-command-properties': sortDefineCommandProperties,
 };
 
 export default {

@@ -31,7 +31,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/no-default-on-positional": "warn",
         "citty/alias-should-be-short": "warn",
         "citty/recommend-name-and-description-in-args": "warn",
-        "citty/sort-sub-commands": "warn"
+        "citty/sort-sub-commands": "warn",
+        "citty/sort-define-command-properties": "warn"
     }
 }
 ```
@@ -587,5 +588,31 @@ export const main = defineCommand({
     b,
     c,
   },
+});
+```
+
+### sort-define-command-properties
+
+Enforce a specific order for properties in defineCommand: `meta`, `args`, `setup`, `run`, `cleanup`, `subCommands`.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  run() {},
+  meta: {},
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {},
+  run() {},
 });
 ```
