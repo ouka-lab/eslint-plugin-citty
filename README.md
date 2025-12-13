@@ -24,7 +24,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/value-hint-case": "error",
         "citty/no-hidden-root-command": "warn",
         "citty/no-alias-on-positional": "error",
-        "citty/enum-must-have-options": "error"
+        "citty/enum-must-have-options": "error",
+        "citty/must-have-run-or-sub-commands": "error"
     }
 }
 ```
@@ -344,6 +345,38 @@ export const main = defineCommand({
       type: "enum",
       options: ["a", "b"],
     },
+  },
+});
+```
+
+### must-have-run-or-sub-commands
+
+Enforce that a command has either `run` or `subCommands` defined.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    name: "main",
+  },
+  // missing run or subCommands
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    name: "main",
+  },
+  run() {
+    console.log("Hello");
   },
 });
 ```

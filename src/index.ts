@@ -5,6 +5,7 @@ import { valueHintCase } from './rules/value-hint-case';
 import { noHiddenRootCommand } from './rules/no-hidden-root-command';
 import { noAliasOnPositional } from './rules/no-alias-on-positional';
 import { enumMustHaveOptions } from './rules/enum-must-have-options';
+import { mustHaveRunOrSubCommands } from './rules/must-have-run-or-sub-commands';
 
 export const rules = {
   'no-duplicated-version': noDuplicatedVersion,
@@ -14,6 +15,7 @@ export const rules = {
   'no-hidden-root-command': noHiddenRootCommand,
   'no-alias-on-positional': noAliasOnPositional,
   'enum-must-have-options': enumMustHaveOptions,
+  'must-have-run-or-sub-commands': mustHaveRunOrSubCommands,
 };
 
 export default {
