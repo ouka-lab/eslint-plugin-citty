@@ -10,6 +10,7 @@ import { recommendMeta } from './rules/recommend-meta';
 import { noEmptyCommandProperties } from './rules/no-empty-command-properties';
 import { noDefaultOnPositional } from './rules/no-default-on-positional';
 import { aliasShouldBeShort } from './rules/alias-should-be-short';
+import { recommendNameAndDescriptionInArgs } from './rules/recommend-name-and-description-in-args';
 
 export const rules = {
   'no-duplicated-version': noDuplicatedVersion,
@@ -24,6 +25,7 @@ export const rules = {
   'no-empty-command-properties': noEmptyCommandProperties,
   'no-default-on-positional': noDefaultOnPositional,
   'alias-should-be-short': aliasShouldBeShort,
+  'recommend-name-and-description-in-args': recommendNameAndDescriptionInArgs,
 };
 
 export default {

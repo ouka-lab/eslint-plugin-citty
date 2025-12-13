@@ -29,7 +29,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/recommend-meta": "warn",
         "citty/no-empty-command-properties": "warn",
         "citty/no-default-on-positional": "warn",
-        "citty/alias-should-be-short": "warn"
+        "citty/alias-should-be-short": "warn",
+        "citty/recommend-name-and-description-in-args": "warn"
     }
 }
 ```
@@ -511,6 +512,39 @@ export const main = defineCommand({
   args: {
     force: {
       alias: "f",
+    },
+  },
+});
+```
+
+### recommend-name-and-description-in-args
+
+Recommend that an arg has `name` and `description` properties defined.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    force: {
+      // missing name and description
+    },
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    force: {
+      name: "force",
+      description: "Force the command",
     },
   },
 });
