@@ -39,7 +39,7 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
 
 ## Rules
 
-| Rule                                                               | ⚠️   | 🚨   | 🔧   |
+| Rule                                                               | ⚠️ warn   | 🚨 error  | 🔧 fix  |
 | :----------------------------------------------------------------- | :--: | :--: | :--: |
 | [alias-should-be-short](#alias-should-be-short)                    |  ✅  |      |      |
 | [enum-must-have-options](#enum-must-have-options)                  |      |  ✅  |      |
