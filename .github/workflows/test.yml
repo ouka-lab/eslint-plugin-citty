@@ -29,11 +29,11 @@ jobs:
     
     - name: Test with Coverage
       if: matrix.node-version == '22.x'
-      run: npm test -- --coverage
+      run: npm run test:coverage
 
     - name: Test (without coverage)
       if: matrix.node-version != '22.x'
-      run: npm test
+      run: npm run test
 
     - name: Report Coverage
       if: matrix.node-version == '22.x'
