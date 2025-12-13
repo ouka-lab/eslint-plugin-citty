@@ -27,7 +27,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/enum-must-have-options": "error",
         "citty/must-have-run-or-sub-commands": "error",
         "citty/recommend-meta": "warn",
-        "citty/no-empty-command-properties": "warn"
+        "citty/no-empty-command-properties": "warn",
+        "citty/no-default-on-positional": "warn"
     }
 }
 ```
@@ -376,9 +377,9 @@ import { defineCommand } from "citty";
 export const main = defineCommand({
   meta: {
     name: "main",
-  },
-  run() {
-    console.log("Hello");
+    run() {
+      console.log("Hello");
+    },
   },
 });
 ```
@@ -442,5 +443,42 @@ export const main = defineCommand({
     console.log("Running...");
   },
   // subCommands removed
+});
+```
+
+### no-default-on-positional
+
+Disallow `default` property on positional arguments.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    input: {
+      type: "positional",
+      default: "default.txt", // Positional arguments cannot have default values
+    },
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    input: {
+      type: "positional",
+    },
+    verbose: {
+      type: "boolean",
+      default: false,
+    },
+  },
 });
 ```
