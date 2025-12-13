@@ -22,7 +22,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/valid-version": "error",
         "citty/no-meaningless-value-hint": "warn",
         "citty/value-hint-case": "error",
-        "citty/no-hidden-root-command": "warn"
+        "citty/no-hidden-root-command": "warn",
+        "citty/no-alias-on-positional": "error"
     }
 }
 ```
@@ -271,6 +272,43 @@ export const main = defineCommand({
 export const sub = defineCommand({
   meta: {
     hidden: true, // Sub command can be hidden
+  },
+});
+```
+
+### no-alias-on-positional
+
+Disallow `alias` property on positional arguments.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    input: {
+      type: "positional",
+      alias: "i", // Positional arguments cannot have aliases
+    },
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    input: {
+      type: "positional",
+    },
+    verbose: {
+      type: "boolean",
+      alias: "v",
+    },
   },
 });
 ```
