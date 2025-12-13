@@ -26,7 +26,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/no-alias-on-positional": "error",
         "citty/enum-must-have-options": "error",
         "citty/must-have-run-or-sub-commands": "error",
-        "citty/recommend-meta": "warn"
+        "citty/recommend-meta": "warn",
+        "citty/no-empty-command-properties": "warn"
     }
 }
 ```
@@ -412,5 +413,34 @@ export const main = defineCommand({
   run() {
     console.log("Hello");
   },
+});
+```
+
+### no-empty-command-properties
+
+Disallow empty implementations for `run`, `setup`, `cleanup`, and `subCommands`.
+These properties should be removed if not used.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  run() {}, // Empty function
+  subCommands: {}, // Empty object
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  run() {
+    console.log("Running...");
+  },
+  // subCommands removed
 });
 ```

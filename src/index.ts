@@ -7,6 +7,7 @@ import { noAliasOnPositional } from './rules/no-alias-on-positional';
 import { enumMustHaveOptions } from './rules/enum-must-have-options';
 import { mustHaveRunOrSubCommands } from './rules/must-have-run-or-sub-commands';
 import { recommendMeta } from './rules/recommend-meta';
+import { noEmptyCommandProperties } from './rules/no-empty-command-properties';
 
 export const rules = {
   'no-duplicated-version': noDuplicatedVersion,
@@ -18,6 +19,7 @@ export const rules = {
   'enum-must-have-options': enumMustHaveOptions,
   'must-have-run-or-sub-commands': mustHaveRunOrSubCommands,
   'recommend-meta': recommendMeta,
+  'no-empty-command-properties': noEmptyCommandProperties,
 };
 
 export default {
