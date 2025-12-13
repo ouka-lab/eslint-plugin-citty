@@ -1,8 +1,8 @@
-import { TSESLint } from '@typescript-eslint/utils';
+import { noDuplicatedVersion } from './rules/no-duplicated-version';
 
 export const rules = {
-  // rules will go here
-} satisfies Record<string, TSESLint.RuleModule<string, any[]>>;
+  'no-duplicated-version': noDuplicatedVersion,
+};
 
 export default {
   rules,

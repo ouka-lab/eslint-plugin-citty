@@ -17,7 +17,7 @@
     ],
     "scripts": {
         "build": "unbuild",
-        "test": "vitest",
+        "test": "vitest run",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"
     },
