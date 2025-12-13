@@ -30,7 +30,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/no-empty-command-properties": "warn",
         "citty/no-default-on-positional": "warn",
         "citty/alias-should-be-short": "warn",
-        "citty/recommend-name-and-description-in-args": "warn"
+        "citty/recommend-name-and-description-in-args": "warn",
+        "citty/sort-sub-commands": "warn"
     }
 }
 ```
@@ -546,6 +547,45 @@ export const main = defineCommand({
       name: "force",
       description: "Force the command",
     },
+  },
+});
+```
+
+### sort-sub-commands
+
+Enforce subCommands to be sorted alphabetically and prefer command references over inline definitions.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+const b = defineCommand({});
+const a = defineCommand({});
+
+export const main = defineCommand({
+  subCommands: {
+    b, // Not sorted
+    a,
+    c: defineCommand({}), // Inline definition is not allowed
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+const a = defineCommand({});
+const b = defineCommand({});
+const c = defineCommand({});
+
+export const main = defineCommand({
+  subCommands: {
+    a,
+    b,
+    c,
   },
 });
 ```
