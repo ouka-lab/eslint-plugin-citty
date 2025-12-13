@@ -21,7 +21,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
         "citty/no-duplicated-version": "error",
         "citty/valid-version": "error",
         "citty/no-meaningless-value-hint": "warn",
-        "citty/value-hint-case": "error"
+        "citty/value-hint-case": "error",
+        "citty/no-hidden-root-command": "warn"
     }
 }
 ```
@@ -235,6 +236,41 @@ export const main = defineCommand({
       type: String,
       valueHint: "userId",
     },
+  },
+});
+```
+
+### no-hidden-root-command
+
+Disallow `hidden` property in root commands.
+This rule considers `export default defineCommand(...)` or `export const main = defineCommand(...)` as root commands.
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    hidden: true, // Root command cannot be hidden
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  meta: {
+    name: "main",
+  },
+});
+
+export const sub = defineCommand({
+  meta: {
+    hidden: true, // Sub command can be hidden
   },
 });
 ```
