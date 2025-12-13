@@ -20,7 +20,8 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
     "rules": {
         "citty/no-duplicated-version": "error",
         "citty/valid-version": "error",
-        "citty/no-meaningless-value-hint": "warn"
+        "citty/no-meaningless-value-hint": "warn",
+        "citty/value-hint-case": "error"
     }
 }
 ```
@@ -170,6 +171,69 @@ export const main = defineCommand({
     },
     verbose: {
       type: Boolean,
+    },
+  },
+});
+```
+
+### value-hint-case
+
+Enforce letter case for `valueHint`. Defaults to `upper` case (UPPER_CASE).
+
+**Options**
+
+- `case`: `upper` (default), `lower`, `camel`, `kebab`, `pascal`, `snake`
+
+**Bad**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    name: {
+      type: String,
+      valueHint: "name", // Should be upper case
+    },
+  },
+});
+```
+
+**Good**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    name: {
+      type: String,
+      valueHint: "NAME",
+    },
+  },
+});
+```
+
+#### Custom Configuration
+
+```json
+{
+  "rules": {
+    "citty/value-hint-case": ["error", { "case": "camel" }]
+  }
+}
+```
+
+**Good (Camel Case Config)**
+
+```ts
+import { defineCommand } from "citty";
+
+export const main = defineCommand({
+  args: {
+    userId: {
+      type: String,
+      valueHint: "userId",
     },
   },
 });
