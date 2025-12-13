@@ -71,6 +71,14 @@ describe('no-hidden-root-command', () => {
             },
           });
         `,
+        output: `
+          import { defineCommand } from "citty";
+          export default defineCommand({
+            meta: {
+              
+            },
+          });
+        `,
         errors: [{ messageId: 'meaninglessHidden' }],
       },
       // Export named 'main' with hidden
@@ -83,6 +91,14 @@ describe('no-hidden-root-command', () => {
             },
           });
         `,
+        output: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            meta: {
+              
+            },
+          });
+        `,
         errors: [{ messageId: 'meaninglessHidden' }],
       },
       // Export named 'root' with hidden
@@ -92,6 +108,14 @@ describe('no-hidden-root-command', () => {
           export const root = defineCommand({
             meta: {
               hidden: true,
+            },
+          });
+        `,
+        output: `
+          import { defineCommand } from "citty";
+          export const root = defineCommand({
+            meta: {
+              
             },
           });
         `,

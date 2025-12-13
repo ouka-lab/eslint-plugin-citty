@@ -11,6 +11,7 @@ export const noAliasOnPositional = createRule({
     messages: {
       noAlias: 'Positional arguments cannot have aliases.',
     },
+    fixable: 'code',
     schema: [],
   },
   defaultOptions: [],
@@ -73,6 +74,14 @@ export const noAliasOnPositional = createRule({
                     context.report({
                       node: aliasProp,
                       messageId: 'noAlias',
+                      fix(fixer) {
+                           const sourceCode = context.sourceCode;
+                           const tokenAfter = sourceCode.getTokenAfter(aliasProp);
+                           if (tokenAfter && tokenAfter.value === ',') {
+                              return fixer.removeRange([aliasProp.range[0], tokenAfter.range[1]]);
+                           }
+                           return fixer.remove(aliasProp);
+                      },
                     });
                   }
                 }

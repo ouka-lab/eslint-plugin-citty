@@ -11,6 +11,7 @@ export const noHiddenRootCommand = createRule({
     messages: {
       meaninglessHidden: 'The "hidden" property is meaningless for the root command.',
     },
+    fixable: 'code',
     schema: [],
   },
   defaultOptions: [],
@@ -57,14 +58,26 @@ export const noHiddenRootCommand = createRule({
             return;
           }
 
+          const report = (nodeToReport: any) => {
+              context.report({
+                node: nodeToReport,
+                messageId: 'meaninglessHidden',
+                fix(fixer) {
+                   const sourceCode = context.sourceCode;
+                   const tokenAfter = sourceCode.getTokenAfter(nodeToReport);
+                   if (tokenAfter && tokenAfter.value === ',') {
+                      return fixer.removeRange([nodeToReport.range[0], tokenAfter.range[1]]);
+                   }
+                   return fixer.remove(nodeToReport);
+                },
+              });
+          }
+
           // Check if it is a root command
           // Condition 1: export default defineCommand(...)
           if (node.parent.type === AST_NODE_TYPES.ExportDefaultDeclaration) {
-             context.report({
-                node: hiddenProperty,
-                messageId: 'meaninglessHidden',
-              });
-              return;
+             report(hiddenProperty);
+             return;
           }
 
           // Condition 2: export const main = defineCommand(...) OR export const root = defineCommand(...)
@@ -75,11 +88,8 @@ export const noHiddenRootCommand = createRule({
             node.parent.parent.type === AST_NODE_TYPES.VariableDeclaration &&
             node.parent.parent.parent.type === AST_NODE_TYPES.ExportNamedDeclaration
           ) {
-             context.report({
-                node: hiddenProperty,
-                messageId: 'meaninglessHidden',
-              });
-              return;
+             report(hiddenProperty);
+             return;
           }
         }
       },

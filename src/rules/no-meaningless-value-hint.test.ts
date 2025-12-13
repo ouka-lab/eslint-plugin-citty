@@ -82,6 +82,17 @@ describe('no-meaningless-value-hint', () => {
             },
           });
         `,
+        output: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              verbose: {
+                type: Boolean,
+                
+              },
+            },
+          });
+        `,
         errors: [{ messageId: 'meaninglessBoolean' }],
       },
       {
@@ -92,6 +103,17 @@ describe('no-meaningless-value-hint', () => {
               verbose: {
                 type: "boolean",
                 valueHint: "level",
+              },
+            },
+          });
+        `,
+        output: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              verbose: {
+                type: "boolean",
+                
               },
             },
           });
@@ -107,6 +129,18 @@ describe('no-meaningless-value-hint', () => {
                 type: String,
                 enum: ["json", "yaml"],
                 valueHint: "format",
+              },
+            },
+          });
+        `,
+        output: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              format: {
+                type: String,
+                enum: ["json", "yaml"],
+                
               },
             },
           });

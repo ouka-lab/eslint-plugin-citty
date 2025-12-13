@@ -67,6 +67,32 @@ describe('no-alias-on-positional', () => {
           });
         `,
       },
+      {
+        code: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              count: {
+                type: "number",
+                alias: "c",
+              },
+            },
+          });
+        `,
+      },
+      {
+        code: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              choice: {
+                type: "enum",
+                alias: "e",
+              },
+            },
+          });
+        `,
+      },
     ],
     invalid: [
       {
@@ -82,6 +108,18 @@ describe('no-alias-on-positional', () => {
             },
           });
         `,
+        output: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              input: {
+                type: "positional",
+                
+                description: "Input file",
+              },
+            },
+          });
+        `,
         errors: [{ messageId: 'noAlias' }],
       },
       {
@@ -92,6 +130,17 @@ describe('no-alias-on-positional', () => {
               input: {
                 type: "positional",
                 alias: ["i", "in"],
+              },
+            },
+          });
+        `,
+        output: `
+          import { defineCommand } from "citty";
+          export const main = defineCommand({
+            args: {
+              input: {
+                type: "positional",
+                
               },
             },
           });

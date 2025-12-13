@@ -12,6 +12,7 @@ export const noMeaninglessValueHint = createRule({
       meaninglessBoolean: 'valueHint is meaningless for boolean arguments.',
       meaninglessEnum: 'valueHint is meaningless when enum is specified.',
     },
+    fixable: 'code',
     schema: [],
   },
   defaultOptions: [],
@@ -73,6 +74,14 @@ export const noMeaninglessValueHint = createRule({
                       context.report({
                         node: valueHintProp,
                         messageId: 'meaninglessBoolean',
+                        fix(fixer) {
+                           const sourceCode = context.sourceCode;
+                           const tokenAfter = sourceCode.getTokenAfter(valueHintProp);
+                           if (tokenAfter && tokenAfter.value === ',') {
+                              return fixer.removeRange([valueHintProp.range[0], tokenAfter.range[1]]);
+                           }
+                           return fixer.remove(valueHintProp);
+                        },
                       });
                       continue; // Skip enum check if already reported for boolean
                     }
@@ -90,6 +99,14 @@ export const noMeaninglessValueHint = createRule({
                     context.report({
                       node: valueHintProp,
                       messageId: 'meaninglessEnum',
+                      fix(fixer) {
+                           const sourceCode = context.sourceCode;
+                           const tokenAfter = sourceCode.getTokenAfter(valueHintProp);
+                           if (tokenAfter && tokenAfter.value === ',') {
+                              return fixer.removeRange([valueHintProp.range[0], tokenAfter.range[1]]);
+                           }
+                           return fixer.remove(valueHintProp);
+                      },
                     });
                   }
                 }
