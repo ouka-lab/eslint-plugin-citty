@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ master ]
 
-permissions:
-  contents: read
-  pull-requests: write
-
 jobs:
   node:
     runs-on: ubuntu-latest
@@ -26,15 +22,28 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    
-    - name: Test with Coverage
-      if: matrix.node-version == '22.x'
-      run: npm run test:coverage
+    - name: Test
+      run: npm test
 
-    - name: Test (without coverage)
-      if: matrix.node-version != '22.x'
-      run: npm run test
+  bun:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+    - run: bun install
+    - name: Test with Bun
+      run: bun run test
 
-    - name: Report Coverage
-      if: matrix.node-version == '22.x'
-      uses: davelosert/vitest-coverage-report-action@v2
+  deno:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: denoland/setup-deno@v2
+      with:
+        deno-version: v2.x
+    - name: Install dependencies
+      run: npm install
+    - name: Test with Deno
+      run: deno run -A --node-modules-dir npm:vitest run
