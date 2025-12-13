@@ -39,6 +39,24 @@ Add `citty` to the plugins section of your `.eslintrc` configuration file. You c
 
 ## Rules
 
+| Rule                                                               | ⚠️   | 🚨   | 🔧   |
+| :----------------------------------------------------------------- | :--: | :--: | :--: |
+| [alias-should-be-short](#alias-should-be-short)                    |  ✅  |      |      |
+| [enum-must-have-options](#enum-must-have-options)                  |      |  ✅  |      |
+| [must-have-run-or-sub-commands](#must-have-run-or-sub-commands)    |      |  ✅  |      |
+| [no-alias-on-positional](#no-alias-on-positional)                  |      |  ✅  |  ✅  |
+| [no-default-on-positional](#no-default-on-positional)              |  ✅  |      |  ✅  |
+| [no-duplicated-version](#no-duplicated-version)                    |      |  ✅  |      |
+| [no-empty-command-properties](#no-empty-command-properties)        |  ✅  |      |  ✅  |
+| [no-hidden-root-command](#no-hidden-root-command)                  |  ✅  |      |      |
+| [no-meaningless-value-hint](#no-meaningless-value-hint)            |  ✅  |      |  ✅  |
+| [recommend-meta](#recommend-meta)                                  |  ✅  |      |      |
+| [recommend-name-and-description-in-args](#recommend-name-and-description-in-args) |  ✅  |      |      |
+| [sort-define-command-properties](#sort-define-command-properties)  |  ✅  |      |      |
+| [sort-sub-commands](#sort-sub-commands)                            |  ✅  |      |  ✅  |
+| [valid-version](#valid-version)                                    |      |  ✅  |      |
+| [value-hint-case](#value-hint-case)                                |      |  ✅  |      |
+
 ### no-duplicated-version
 
 Disallow multiple version definitions in citty commands within the same file.
