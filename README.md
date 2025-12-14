@@ -755,3 +755,7 @@ export const main = defineCommand({
   }
 });
 ```
+
+# License
+
+Made by [Kanon](https://github.com/ysknsid25). Publish under [MIT License](https://github.com/ysknsid25/eslint-plugin-citty/blob/master/LICENSE).
