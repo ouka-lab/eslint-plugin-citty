@@ -15,6 +15,10 @@
     "files": [
         "dist"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ysknsid25/eslint-plugin-citty.git"
+    },
     "scripts": {
         "build": "unbuild",
         "test": "vitest run",
