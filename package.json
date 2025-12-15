@@ -1,6 +1,6 @@
 {
     "name": "eslint-plugin-citty",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "ESLint plugin for citty and all citty's lover",
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
