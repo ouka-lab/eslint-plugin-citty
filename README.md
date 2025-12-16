@@ -10,32 +10,36 @@ npm install -D eslint-plugin-citty
 
 ## Usage
 
-Add `citty` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
+Sample `eslint.config.mjs`
 
-```json
-{
-    "plugins": [
-        "citty"
-    ],
-    "rules": {
-        "citty/no-duplicated-version": "error",
-        "citty/valid-version": "error",
-        "citty/no-meaningless-value-hint": "warn",
-        "citty/value-hint-case": "error",
-        "citty/no-hidden-root-command": "warn",
-        "citty/no-alias-on-positional": "error",
-        "citty/enum-must-have-options": "error",
-        "citty/must-have-run-or-sub-commands": "error",
-        "citty/recommend-meta": "warn",
-        "citty/no-empty-command-properties": "warn",
-        "citty/no-default-on-positional": "warn",
-        "citty/alias-should-be-short": "warn",
-        "citty/recommend-name-and-description-in-args": "warn",
-        "citty/sort-sub-commands": "warn",
-        "citty/sort-define-command-properties": "warn",
-        "citty/group-command-args": "warn"
-    }
-}
+```javascript
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
+import citty from "eslint-plugin-citty";
+
+export default [
+    {
+        plugins: {
+            citty: citty,
+        },
+    },
+    pluginJs.configs.recommended,
+    ...tseslint.configs.recommended,
+    ...citty.configs.recommended,
+    {
+        files: ["**/*.{ts,tsx,cts,mts}"],
+        languageOptions: {
+            parser: tseslint.parser,
+            parserOptions: {
+                ecmaVersion: "latest",
+                sourceType: "module",
+                project: "./tsconfig.json",
+            },
+            globals: globals.node,
+        },
+    },
+];
 ```
 
 ## Rules
